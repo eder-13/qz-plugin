@@ -14,7 +14,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _qzWebPlugin = Qz();
+  final _qzWebPlugin = Qz(secureMode: true, algorithm: 'SHA512', signatureUrl: 'http://localhost:3000/sign?requestToSign=', certificateUrl: 'http://localhost:3000/file');
 
   String? printer;
   String? pdfBase64;
