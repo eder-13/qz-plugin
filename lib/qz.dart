@@ -5,19 +5,16 @@ import 'package:js/js.dart';
 import 'qz_platform_interface.dart';
 
 class Qz {
-
-    Qz({
-      bool secureMode = false,
+  Qz(
+      {bool secureMode = false,
       String? certificateUrl,
       String algorithm = 'SHA512',
-      String? signatureUrl
-    }){
-      if (secureMode) {
-        assert(certificateUrl != null && signatureUrl != null);
-        _enableSecurity(certificateUrl!, algorithm, signatureUrl!);
-      }
+      String? signatureUrl}) {
+    if (secureMode) {
+      assert(certificateUrl != null && signatureUrl != null);
+      _enableSecurity(certificateUrl!, algorithm, signatureUrl!);
     }
-
+  }
 
   String getQzVersion() {
     return QzPlatform.instance.getQzVersion();
@@ -39,4 +36,5 @@ class Qz {
 }
 
 @JS('enableSecurity')
-external void _enableSecurity(String certificateUrl, String algorithm, String signatureUrl);
+external void _enableSecurity(
+    String certificateUrl, String algorithm, String signatureUrl);

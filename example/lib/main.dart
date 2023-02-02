@@ -14,7 +14,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _qzWebPlugin = Qz(secureMode: true, algorithm: 'SHA512', signatureUrl: 'http://localhost:3000/sign?requestToSign=', certificateUrl: 'http://localhost:3000/file');
+  final _qzWebPlugin = Qz();
 
   String? printer;
   String? pdfBase64;
@@ -40,7 +40,6 @@ class _MyAppState extends State<MyApp> {
         body: Column(
           children: [
             FutureBuilder(
-
                 future: _qzWebPlugin.getAllPrinters(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
