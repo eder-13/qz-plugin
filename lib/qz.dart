@@ -2,39 +2,51 @@
 library qz_security;
 
 import 'package:js/js.dart';
-import 'qz_platform_interface.dart';
+import 'package:qz/qz_web.dart';
 
 class Qz {
+
+  final QzWeb _instance = QzWeb();
+
   Qz(
-      {bool secureMode = false,
-      String? certificateUrl,
+      {bool backendMode = false,
       String algorithm = 'SHA512',
-      String? signatureUrl}) {
-    if (secureMode) {
+      String? certificateUrl,
+      String? signatureUrl,
+      String? certificateString,
+      String? signatureString}) {
+    if (backendMode) {
       assert(certificateUrl != null && signatureUrl != null);
-      _enableSecurity(certificateUrl!, algorithm, signatureUrl!);
+      _enableBackendSecurity(certificateUrl!, algorithm, signatureUrl!);
+    } else {
+      assert(certificateString != null && signatureString != null);
+      _enableFrontendSecurity(certificateString!, algorithm, signatureString!);
     }
   }
 
   String getQzVersion() {
-    return QzPlatform.instance.getQzVersion();
+    return _instance.getQzVersion();
   }
 
   Future<dynamic> connect() {
-    return QzPlatform.instance.connect();
+    return _instance.connect();
   }
 
   Future<dynamic> print(
       {String? printerName, String? base64, List<int>? blob, Uri? uri}) {
-    return QzPlatform.instance
+    return _instance
         .print(printerName: printerName, base64: base64, blob: blob, uri: uri);
   }
 
   Future<List<String>> getAllPrinters() {
-    return QzPlatform.instance.getAllPrinters();
+    return _instance.getAllPrinters();
   }
 }
 
-@JS('enableSecurity')
-external void _enableSecurity(
+@JS('enableBackendSecurity')
+external void _enableBackendSecurity(
     String certificateUrl, String algorithm, String signatureUrl);
+
+@JS('enableFrontendSecurity')
+external void _enableFrontendSecurity(
+    String certificateString, String algorithm, String signatureString);

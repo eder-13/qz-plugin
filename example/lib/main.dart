@@ -15,9 +15,62 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _qzWebPlugin = Qz(
-    secureMode: true,
-    certificateUrl: 'http://skynet.local:3000/file',
-    signatureUrl: 'http://skynet.local:3000/sign?requestToSign=',
+    certificateString: '''
+      -----BEGIN CERTIFICATE-----
+      MIIECzCCAvOgAwIBAgIGAYYN0MrZMA0GCSqGSIb3DQEBCwUAMIGiMQswCQYDVQQG 
+      EwJVUzELMAkGA1UECAwCTlkxEjAQBgNVBAcMCUNhbmFzdG90YTEbMBkGA1UECgwS 
+      UVogSW5kdXN0cmllcywgTExDMRswGQYDVQQLDBJRWiBJbmR1c3RyaWVzLCBMTEMx 
+      HDAaBgkqhkiG9w0BCQEWDXN1cHBvcnRAcXouaW8xGjAYBgNVBAMMEVFaIFRyYXkg 
+      RGVtbyBDZXJ0MB4XDTIzMDEzMTE2MzAzMloXDTQzMDEzMTE2MzAzMlowgaIxCzAJ 
+      BgNVBAYTAlVTMQswCQYDVQQIDAJOWTESMBAGA1UEBwwJQ2FuYXN0b3RhMRswGQYD 
+      VQQKDBJRWiBJbmR1c3RyaWVzLCBMTEMxGzAZBgNVBAsMElFaIEluZHVzdHJpZXMs 
+      IExMQzEcMBoGCSqGSIb3DQEJARYNc3VwcG9ydEBxei5pbzEaMBgGA1UEAwwRUVog 
+      VHJheSBEZW1vIENlcnQwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDo 
+      pY6Ok7afc0jvsPZqnduQUFryc4OSxgSs25sHhj9Xz8poLjuZC3H2AAA07ENFlU4Y 
+      tOAUY67ymXkrRZ3L/BYGKhQkT2xKay4qyahmHVzk3LgkWORzMnLMGp5+1yvMdcLT 
+      dCTo0ftUsxp04CkLv/IlJ9TkSULHcuCs9wgW5V9QzpKHg6mQs2zkU99fj9VD1vXp 
+      mtWQVkKi4sO2JXpft+wfjIjovjnjUIpOghi+w6lUr9SWvm50Nr/40gAqwhMYoEIf 
+      Y178CkcIBZ5CRHDo4Z4FkFEN9d4RcdFx9IffEQJRzrpOpMPv5eKEJPd3fgsm4Gov 
+      sz2nsKdNdR0UGNs+1OMZAgMBAAGjRTBDMBIGA1UdEwEB/wQIMAYBAf8CAQEwDgYD 
+      VR0PAQH/BAQDAgEGMB0GA1UdDgQWBBSnfRIlAewCFwuCUP6W2af+kfBUJTANBgkq 
+      hkiG9w0BAQsFAAOCAQEAQLH0QtT4HkXJv2AhpAYIKA3Bk083m5Y07WBCYk20v27u 
+      PLG/nhdhNTzq+a+GgrN+QAafhpDSXQWGJ8rryEceTPCy9naqGlt9L9cyOooxj3/6 
+      +JxfFdap+jpMB4B7BjuferbsvLFqmVyIOG/7gqOkFICRHGg+g9mWhwd06INOJRf/ 
+      PR5wCxYuaIZ6rKGtO0CjAnBuTAUc3bjc0CZb3e7v7VHGqdWWeIjCv5QWQBkwPnm2 
+      LLRcxJF9ob3vsLGRuFrcikDe9HhHAZHg2U27cJNl299SpA2p02WZtx2TtDonjDJE 
+      WA/wi2sM9UfpJskesQWxRmjTYX1I21hI/8ZSoQ2hXA==
+      -----END CERTIFICATE----- 
+    ''',
+    signatureString: '''
+      -----BEGIN PRIVATE KEY-----
+      MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDopY6Ok7afc0jv 
+      sPZqnduQUFryc4OSxgSs25sHhj9Xz8poLjuZC3H2AAA07ENFlU4YtOAUY67ymXkr 
+      RZ3L/BYGKhQkT2xKay4qyahmHVzk3LgkWORzMnLMGp5+1yvMdcLTdCTo0ftUsxp0 
+      4CkLv/IlJ9TkSULHcuCs9wgW5V9QzpKHg6mQs2zkU99fj9VD1vXpmtWQVkKi4sO2 
+      JXpft+wfjIjovjnjUIpOghi+w6lUr9SWvm50Nr/40gAqwhMYoEIfY178CkcIBZ5C 
+      RHDo4Z4FkFEN9d4RcdFx9IffEQJRzrpOpMPv5eKEJPd3fgsm4Govsz2nsKdNdR0U 
+      GNs+1OMZAgMBAAECggEAFzirNY0F7f12WsJpnjO6fjmfElM4X1aXkd9rpoEeYnfx 
+      pptyxHBxhBH081Nf1Zq1DF9FfJOEm195SjntKba0RhI+J2+sCfOPzKKLRgIJSyjC 
+      0pHy35K6BahkiJmWnBZnB28w3fJTqV0lN2RGhI84rr++jrjHSxwq0+jmbE6hyHFd 
+      U9xK7pV+MyPbvghckbYa/Ha8yBbt6VCpWBflj66R0u6QQSHjxrvSk2q5ixPKu5xh 
+      dXw07HxA89guB48LW3g45wScETChmGM6B6XprmWhwIJwqW6H8Ezql+W3TnmrYZff 
+      MQc0X/ZB+suqHIgSKCuK3avm7LfGYNrwU5MMSH6KZwKBgQD0Vci/zO5qvmxNezN4 
+      46xsx6VcnzERqSiClj90QbIl8ezKBHujCrmmnlbsNwC9begVxKrQt4Emp/xr8xfJ 
+      CNYN2im/W/Jkya7JX1iJ+ZX7E7Ayl2WrfZJbduwIaumS8MRK05mSh9E2u34fIOzB 
+      kUi3xphwviTETqYjQ9M+0/lKywKBgQDzwOtjwKlKNaJsYrkMKoZvmDIfJ2++NAkV 
+      yt5s+trX0/N8m/j6962YUyc0DUuvcS0F/g6/WKyKp+xrRe1KkePmsif9cHBgN7F4 
+      jYgdefoN5QMeSsORJ0KS449PImcI3/blZccuOun/Mot0UlV2bGA41H/hui+BXlz4 
+      HFXRgIaZKwKBgQCmgVMlyczrt0rs3jlsd5LIKqF45g81XtZ5b1RcsGxryVq5LKbo 
+      q+VqM1s+7Bi3/o77TqOtSnBb3Hx7QBUEbd4ZYIO0oT8lCf/vwOcAV7KqgHdBcsTZ 
+      QeCcLgWZkuoLtcG+0EZGggHDz6+aHQDaxFwOyOqXYiyCDqrPO2hY13F6UwKBgFxF 
+      1pXPdAZ0oUTYZmaVnoiWG7sxaZqeBiZqwqKMn9V+FblBLhKLOfrk131b3x/N/xY6 
+      o4iJ398pTFUbhoVpDtXg8UR+kPvLeXJCWZmW+DLUU8be1IOZUhla7YAubMSuS79x 
+      NOJqSPRjROlG1bVbt10sDDD+E0es2hLOXypMtic7AoGBAIDD4e1WcIQ7mk/cgQQL 
+      dLncAESvEHrQvABltKORHY6QwFP2nfJIkZoTNjDJEAYcr42jz3xViix5SKnV/UmL 
+      xu4gNhi9NSoCovzQaf0IapuErNPiJ7mFrc9dC2xAOvTek7eKXzZcbw2RZYYxD9rG 
+      98NUDp8f725WnK39MXR5ZgOe 
+      -----END PRIVATE KEY-----
+    ''',
   );
 
   String? printer;
