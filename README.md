@@ -28,10 +28,8 @@ You can use backend signing or frontend signing to manage the qz certificates ac
 
       <!-- web/index.html --> 
 
-      <!-- jsrsasign library required for JavaScript signing. In production,download and reference a local copy!!--> 
-
+      <!-- jsrsasign library required for JavaScript signing. In production,download and reference a local copy!!-->
       <script src="https://cdn.rawgit.com/kjur/jsrsasign/c057d3447b194fa0a3fdcea110579454898e093d/jsrsasign-all-min.js">
-
       </script>
 
      ``` 

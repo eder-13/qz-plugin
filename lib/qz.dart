@@ -5,7 +5,6 @@ import 'package:js/js.dart';
 import 'package:qz/qz_web.dart';
 
 class Qz {
-
   final QzWeb _instance = QzWeb();
 
   Qz(
@@ -34,8 +33,8 @@ class Qz {
 
   Future<dynamic> print(
       {String? printerName, String? base64, List<int>? blob, Uri? uri}) {
-    return _instance
-        .print(printerName: printerName, base64: base64, blob: blob, uri: uri);
+    return _instance.print(
+        printerName: printerName, base64: base64, blob: blob, uri: uri);
   }
 
   Future<List<String>> getAllPrinters() {

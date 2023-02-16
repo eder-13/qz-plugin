@@ -1,7 +1,6 @@
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:qz/src/qz_lib.dart';
 
-
 /// A web implementation of the QzPlatform of the Qz plugin.
 class QzWeb {
   /// Constructs a QzWeb
