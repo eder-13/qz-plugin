@@ -77,11 +77,11 @@ class _MyAppState extends State<MyApp> {
               SizedBox(
                 width: 100,
                 child: ElevatedButton(
-                  onPressed: (){
-                    _qzWebPlugin.print(printerName: printer, base64: pdfBase64);
-                  },
-                  child: const Text('Print')
-                ),
+                    onPressed: () {
+                      _qzWebPlugin.print(
+                          printerName: printer, base64: pdfBase64);
+                    },
+                    child: const Text('Print')),
               ),
             ],
           ),
