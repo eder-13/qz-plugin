@@ -23,7 +23,7 @@ class QzWebsocket {
 @JS('connect')
 external dynamic _connect();
 
-@JS('connect')
+@JS('disconnect')
 external dynamic _disconnect();
 
 @JS('isActive')
