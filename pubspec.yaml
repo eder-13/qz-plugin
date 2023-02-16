@@ -1,6 +1,6 @@
 name: qz
 description: Web plugin to support qz library
-version: 0.0.2+2
+version: 0.0.2+3
 homepage: https://github.com/eder-13/qz-plugin
 
 environment:
