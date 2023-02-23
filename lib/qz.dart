@@ -23,23 +23,19 @@ class Qz {
     }
   }
 
-  String getQzVersion() {
-    return _instance.getQzVersion();
-  }
+  String getQzVersion() => _instance.getQzVersion();
 
-  Future<dynamic> connect() {
-    return _instance.connect();
-  }
+  Future<dynamic> connect() => _instance.connect();
 
   Future<dynamic> print(
-      {String? printerName, String? base64, List<int>? blob, Uri? uri}) {
-    return _instance.print(
-        printerName: printerName, base64: base64, blob: blob, uri: uri);
-  }
+          {String? printerName, String? base64, List<int>? blob, Uri? uri}) =>
+      _instance.print(
+          printerName: printerName, base64: base64, blob: blob, uri: uri);
 
-  Future<List<String>> getAllPrinters() {
-    return _instance.getAllPrinters();
-  }
+  Future<List<String>> getAllPrinters() => _instance.getAllPrinters();
+
+  Future<dynamic> printZpl({String? printerName, required String zplString}) =>
+      _instance.printZpl(zplString: zplString, printerName: printerName);
 }
 
 @JS('enableBackendSecurity')

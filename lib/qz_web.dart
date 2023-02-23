@@ -14,10 +14,13 @@ class QzWeb {
 
   Future<dynamic> connect() => Qz().websocket.connect();
 
-  Future<dynamic> print(
+  Future<void> print(
           {String? printerName, String? base64, List<int>? blob, Uri? uri}) =>
       Qz().printQz(
           printerName: printerName, base64: base64, blob: blob, uri: uri);
+
+  Future<void> printZpl({String? printerName, required String zplString}) =>
+      Qz().printZplQz(zpl: zplString, printerName: printerName);
 
   Future<List<String>> getAllPrinters() => Qz().printers.findAll();
 }
