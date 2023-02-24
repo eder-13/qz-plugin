@@ -1,6 +1,6 @@
 name: qz
 description: Web plugin to support qz tray api for JavaScript intended for the printers management.
-version: 0.2.0+5
+version: 0.2.1+6
 homepage: https://github.com/eder-13/qz-plugin
 
 environment:

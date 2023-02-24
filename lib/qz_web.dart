@@ -1,26 +1,48 @@
+@JS()
+library qz_security;
+
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:js/js.dart';
 import 'package:qz/src/qz_lib.dart';
 
-/// A web implementation of the QzPlatform of the Qz plugin.
 class QzWeb {
-  /// Constructs a QzWeb
-  QzWeb();
-
-  static void registerWith(Registrar registrar) {
-    QzWeb();
+  QzWeb(
+      {bool backendMode = false,
+      String algorithm = 'SHA512',
+      String? certificateUrl,
+      String? signatureUrl,
+      String? certificateString,
+      String? signatureString}) {
+    if (backendMode) {
+      assert(certificateUrl != null && signatureUrl != null);
+      _enableBackendSecurity(certificateUrl!, algorithm, signatureUrl!);
+    } else {
+      assert(certificateString != null && signatureString != null);
+      _enableFrontendSecurity(certificateString!, algorithm, signatureString!);
+    }
   }
 
-  String getQzVersion() => Qz().version;
+  static void registerWith(Registrar registrar) {}
 
-  Future<dynamic> connect() => Qz().websocket.connect();
+  String getQzVersion() => QzIo().version;
+
+  Future<dynamic> connect() => QzIo().websocket.connect();
 
   Future<void> print(
           {String? printerName, String? base64, List<int>? blob, Uri? uri}) =>
-      Qz().printQz(
+      QzIo().printQz(
           printerName: printerName, base64: base64, blob: blob, uri: uri);
 
   Future<void> printZpl({String? printerName, required String zplString}) =>
-      Qz().printZplQz(zpl: zplString, printerName: printerName);
+      QzIo().printZplQz(zpl: zplString, printerName: printerName);
 
-  Future<List<String>> getAllPrinters() => Qz().printers.findAll();
+  Future<List<String>> getAllPrinters() => QzIo().printers.findAll();
 }
+
+@JS('enableBackendSecurity')
+external void _enableBackendSecurity(
+    String certificateUrl, String algorithm, String signatureUrl);
+
+@JS('enableFrontendSecurity')
+external void _enableFrontendSecurity(
+    String certificateString, String algorithm, String signatureString);

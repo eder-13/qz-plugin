@@ -9,10 +9,10 @@ import 'package:qz/src/configs.dart';
 import 'package:qz/src/printers.dart';
 import 'package:qz/src/websocket.dart';
 
-class Qz {
-  static final Qz _qz = Qz._internal();
-  factory Qz() => _qz;
-  Qz._internal();
+class QzIo {
+  static final QzIo _qz = QzIo._internal();
+  factory QzIo() => _qz;
+  QzIo._internal();
 
   final QzWebsocket websocket = QzWebsocket();
   final QzPrinters printers = QzPrinters();
