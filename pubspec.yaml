@@ -1,10 +1,10 @@
 name: qz
 description: Web plugin to support qz tray api for JavaScript intended for the printers management.
-version: 0.1.1+4
+version: 0.2.1+7
 homepage: https://github.com/eder-13/qz-plugin
 
 environment:
-  sdk: '>=2.18.6 <3.0.0'
+  sdk: ">=2.18.6 <4.0.0"
   flutter: ">=2.5.0"
 
 dependencies:
@@ -30,4 +30,3 @@ flutter:
       web:
         pluginClass: QzWeb
         fileName: qz_web.dart
-

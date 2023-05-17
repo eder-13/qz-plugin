@@ -9,10 +9,10 @@ import 'package:qz/src/configs.dart';
 import 'package:qz/src/printers.dart';
 import 'package:qz/src/websocket.dart';
 
-class Qz {
-  static final Qz _qz = Qz._internal();
-  factory Qz() => _qz;
-  Qz._internal();
+class QzIo {
+  static final QzIo _qz = QzIo._internal();
+  factory QzIo() => _qz;
+  QzIo._internal();
 
   final QzWebsocket websocket = QzWebsocket();
   final QzPrinters printers = QzPrinters();
@@ -20,7 +20,7 @@ class Qz {
 
   String get version => _version;
 
-  Future<dynamic> printQz(
+  Future<void> printQz(
       {String? printerName, String? base64, List<int>? blob, Uri? uri}) async {
     assert(base64 != null || blob != null || uri != null);
 
@@ -37,22 +37,34 @@ class Qz {
       data = uri.toString();
     }
 
+    final info = [
+      {
+        'type': 'pixel',
+        'format': 'pdf',
+        'flavor': flavor,
+        'data': data,
+      }
+    ];
+
+    await _sendToPrint(data: info, printerName: printerName);
+  }
+
+  Future<void> printZplQz({String? printerName, required String zpl}) async {
+    final info = [zpl];
+
+    await _sendToPrint(data: info, printerName: printerName);
+  }
+
+  Future<void> _sendToPrint(
+      {String? printerName, required List<dynamic> data}) async {
     try {
       String printer = printerName != null
           ? await printers.findOne(printerName)
           : await printers.getDefault();
 
       final config = configs.create(printer);
-      final info = [
-        {
-          'type': 'pixel',
-          'format': 'pdf',
-          'flavor': flavor,
-          'data': data,
-        }
-      ];
 
-      await _print(config, jsify(info));
+      await _print(config, jsify(data));
     } catch (e) {
       throw Exception(e);
     }
