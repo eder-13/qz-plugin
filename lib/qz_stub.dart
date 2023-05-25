@@ -11,6 +11,8 @@ class QzWeb {
 
   Future<dynamic> connect() => throw UnimplementedError('Unsupported');
 
+  Future<void> reloadConnection() => throw UnimplementedError('Unsupported');
+
   Future<dynamic> print(
           {String? printerName, String? base64, List<int>? blob, Uri? uri}) =>
       throw UnimplementedError('Unsupported');

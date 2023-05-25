@@ -28,6 +28,11 @@ class QzWeb {
 
   Future<dynamic> connect() => QzIo().websocket.connect();
 
+  Future<void> reloadConnection() async {
+    await QzIo().websocket.disconnect();
+    await QzIo().websocket.connect();
+  }
+
   Future<void> print(
           {String? printerName, String? base64, List<int>? blob, Uri? uri}) =>
       QzIo().printQz(
