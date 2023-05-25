@@ -1,3 +1,9 @@
+## v0.2.2+8
+
+### 2023-05-25
+
+- Add reload connection functionality
+
 ## v0.2.1+7
 
 ### 2023-05-17
