@@ -10,18 +10,43 @@ import 'package:qz/src/printers.dart';
 import 'package:qz/src/websocket.dart';
 
 class QzIo {
-  static final QzIo _qz = QzIo._internal();
-  factory QzIo() => _qz;
-  QzIo._internal();
+  static final QzWebsocket _websocket = QzWebsocket();
+  static final QzPrinters _printers = QzPrinters();
+  static final QzConfigs _configs = QzConfigs();
 
-  final QzWebsocket websocket = QzWebsocket();
-  final QzPrinters printers = QzPrinters();
-  final QzConfigs configs = QzConfigs();
+  static String get version => _version;
 
-  String get version => _version;
+  static Future<dynamic> connect() => _websocket.connect();
+  static Future<dynamic> disconnect() => _websocket.disconnect();
+  static Future<void> reloadConnection() async {
+    await disconnect();
+    await connect();
+  }
 
-  Future<void> printQz(
-      {String? printerName, String? base64, List<int>? blob, Uri? uri}) async {
+  static Future<List<String>> getAllPrinters() => _printers.findAll();
+
+  static Future<void> print(
+      {String? printerName, required List<dynamic> data}) async {
+    try {
+      String printer = printerName != null
+          ? await _printers.findOne(printerName)
+          : await _printers.getDefault();
+
+      final config = _configs.create(printer);
+
+      await _print(config, jsify(data));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> _smartPrint(
+      {required String type,
+      required String format,
+      String? printerName,
+      String? base64,
+      List<int>? blob,
+      Uri? uri}) async {
     assert(base64 != null || blob != null || uri != null);
 
     String flavor, data;
@@ -39,36 +64,40 @@ class QzIo {
 
     final info = [
       {
-        'type': 'pixel',
-        'format': 'pdf',
+        'type': type,
+        'format': format,
         'flavor': flavor,
         'data': data,
       }
     ];
 
-    await _sendToPrint(data: info, printerName: printerName);
+    return print(data: info, printerName: printerName);
   }
 
-  Future<void> printZplQz({String? printerName, required String zpl}) async {
-    final info = [zpl];
+  static Future<void> printRaw(
+          {String? printerName, String? base64, List<int>? blob, Uri? uri}) =>
+      _smartPrint(
+        type: 'raw',
+        format: 'command',
+        printerName: printerName,
+        base64: base64,
+        blob: blob,
+        uri: uri,
+      );
 
-    await _sendToPrint(data: info, printerName: printerName);
-  }
+  static Future<void> printPDF(
+          {String? printerName, String? base64, List<int>? blob, Uri? uri}) =>
+      _smartPrint(
+        type: 'pixel',
+        format: 'pdf',
+        printerName: printerName,
+        base64: base64,
+        blob: blob,
+        uri: uri,
+      );
 
-  Future<void> _sendToPrint(
-      {String? printerName, required List<dynamic> data}) async {
-    try {
-      String printer = printerName != null
-          ? await printers.findOne(printerName)
-          : await printers.getDefault();
-
-      final config = configs.create(printer);
-
-      await _print(config, jsify(data));
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
+  static Future<void> printZPL({String? printerName, required String zpl}) =>
+      print(data: [zpl], printerName: printerName);
 }
 
 @JS('version')

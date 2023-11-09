@@ -1,3 +1,16 @@
+## v1.0.0+1
+### Added
+- `printRaw` function added to do print requests using `type: 'raw'` and `format: 'command'`.
+- `print` function added to allow to manually do any kind of print request.
+- `disconnect` function added.
+
+### Changed
+- Breaking change: `printZpl` function renamed to `printZPL`
+- Breaking change: `getQzVersion` function renamed to `version` property
+- Breaking change: `QzIo` full refactored to be static
+- Sample project updated to show how to use `printRaw`, `printPDF` and `printZPL` functions from `base64`, `file` and `String` sources. 
+
+
 ## v0.2.2+8
 
 ### 2023-05-25

@@ -48,22 +48,39 @@ You can use backend signing or frontend signing to manage the qz certificates ac
 | `signatureString`   | `String?`                | It is required if `backendMode` is disabled. Represents the content of your private key.                                                                                                                    |
 | `algorithm`         | `SHA1`/`SHA256`/`SHA512` | Must be the same as the backend. If you are using frontend signing skip this parameter. **Default** `SHA512`.                                                                                               |
 
-### Qz methods
+### Qz functions
 
-#### `String getQzVersion()`
+```dart
+String get version
+```
+- Returns the current version of Qz.
 
-Returns the current version of Qz.
+```dart
+Future<dynamic> connect()
+```
+- Check if there is an instance connected and if there is not it connects to QZ Tray.
 
-#### `Future<dynamic> connect()`
+```dart
+Future<List<String>> getAllPrinters()
+```
+- Returns the name of all available printers in the system.
 
-Check if there is an instance connected and if there is not it connects to QZ Tray.
+```dart
+Future<dynamic> printPDF({String? printerName, String? base64, List<int>? blob, Uri? uri})
+```
+- Prints a PDF using `type: pixel`
 
-#### `Future<List<String>> getAllPrinters()`
+```dart
+Future<dynamic> printRaw({String? printerName, String? base64, List<int>? blob, Uri? uri})
+```
+- Prints anything using `type: raw` and `format: 'command'`, this is useful when you need to send a file directly to the printer and the printer decides how to print it.
 
-Returns the name of all available printers in the system.
+```dart
+Future<dynamic> printZPL({String? printerName, required String zpl})
+```
+- Prints a document using ZPL code, only compatible with ZPL printers.
 
-#### `Future<dynamic> print({String? printerName, String? base64, List<int>? blob, Uri? uri})`
-
+### Print params
 `printerName`: A `String` that represents the printer you want to print to. **Default** Default system printer.
 
 `base64`: A `String` that represents a base64 pdf. **Optional**.

@@ -24,24 +24,29 @@ class QzWeb {
 
   static void registerWith(Registrar registrar) {}
 
-  String getQzVersion() => QzIo().version;
+  String get version => QzIo.version;
 
-  Future<dynamic> connect() => QzIo().websocket.connect();
+  Future<dynamic> connect() => QzIo.connect();
+  Future<dynamic> disconnect() => QzIo.connect();
+  Future<void> reloadConnection() => QzIo.reloadConnection();
 
-  Future<void> reloadConnection() async {
-    await QzIo().websocket.disconnect();
-    await QzIo().websocket.connect();
-  }
+  Future<List<String>> getAllPrinters() => QzIo.getAllPrinters();
 
-  Future<void> print(
+  Future<void> print({String? printerName, required List<dynamic> data}) =>
+      QzIo.print(printerName: printerName, data: data);
+
+  Future<void> printRaw(
           {String? printerName, String? base64, List<int>? blob, Uri? uri}) =>
-      QzIo().printQz(
+      QzIo.printRaw(
           printerName: printerName, base64: base64, blob: blob, uri: uri);
 
-  Future<void> printZpl({String? printerName, required String zplString}) =>
-      QzIo().printZplQz(zpl: zplString, printerName: printerName);
+  Future<void> printPDF(
+          {String? printerName, String? base64, List<int>? blob, Uri? uri}) =>
+      QzIo.printPDF(
+          printerName: printerName, base64: base64, blob: blob, uri: uri);
 
-  Future<List<String>> getAllPrinters() => QzIo().printers.findAll();
+  Future<void> printZPL({String? printerName, required String zpl}) =>
+      QzIo.printZPL(zpl: zpl, printerName: printerName);
 }
 
 @JS('enableBackendSecurity')
