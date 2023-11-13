@@ -27,7 +27,7 @@ class QzWeb {
   String get version => QzIo.version;
 
   Future<dynamic> connect() => QzIo.connect();
-  Future<dynamic> disconnect() => QzIo.connect();
+  Future<dynamic> disconnect() => QzIo.disconnect();
   Future<void> reloadConnection() => QzIo.reloadConnection();
 
   Future<List<String>> getAllPrinters() => QzIo.getAllPrinters();
